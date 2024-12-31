@@ -40,7 +40,6 @@ const AddTaskModal = ({ isOpen, onClose, onAddTask }) => {
     onAddTask({
       id: Date.now(),
       taskName: task,
-      completed: false,
       status: status,
       name: name,
     });
