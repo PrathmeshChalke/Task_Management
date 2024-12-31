@@ -54,7 +54,7 @@ const AddTaskModal = ({ isOpen, onClose, onAddTask }) => {
       opened={isOpen}
       onClose={() => null}
       withCloseButton={false}
-      size='30rem'
+      size="30rem"
       overlayProps={{
         backgroundOpacity: 0.55,
         blur: 3,
@@ -65,12 +65,12 @@ const AddTaskModal = ({ isOpen, onClose, onAddTask }) => {
         timingFunction: "linear",
       }}
     >
-      <Modal.Header className='d-flex justify-content-between border-bottom mb-3 py-0'>
+      <Modal.Header className="d-flex justify-content-between border-bottom mb-3 py-0">
         <Modal.Title>
-          <div className='fw-bold fs-4'>Add New Task </div>
+          <div className="fw-bold fs-4">Add New Task </div>
         </Modal.Title>
         <button
-          className='btn'
+          className="btn"
           onClick={() => {
             onClose();
             setStatus("");
@@ -78,49 +78,49 @@ const AddTaskModal = ({ isOpen, onClose, onAddTask }) => {
             setName("");
           }}
         >
-          <FontAwesomeIcon icon={faXmark} size='xl' />
+          <FontAwesomeIcon icon={faXmark} size="xl" />
         </button>
       </Modal.Header>
-      <Modal.Body className='border-bottom mb-2'>
-        <div className=''>
+      <Modal.Body className="border-bottom mb-2">
+        <div className="">
           <TextInput
-            label='Task Name'
+            label="Task Name"
             value={task}
             onChange={(e) => setTask(e.target.value)}
-            placeholder='Enter task name'
-            className='mb-3'
+            placeholder="Enter task name"
+            className="mb-3"
             required
           />
           <TextInput
-            label='Assignee Name'
+            label="Assignee Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder='Enter Assignee name'
-            className='mb-3'
+            placeholder="Enter Assignee name"
+            className="mb-3"
             required
           />
           <Select
-            label='Status'
+            label="Status"
             data={[
               { label: "In Progress", value: "In_Progress" },
               { label: "Pending", value: "Pending" },
               { label: "Completed", value: "Completed" },
             ]}
-            className='mb-3'
-            placeholder='Select...'
+            className="mb-3"
+            placeholder="Select..."
             onChange={(e) => setStatus(e)}
             value={status}
             required
           />
         </div>
       </Modal.Body>
-      <div className='d-flex justify-content-end gap-3'>
-        <Button color='gray' onClick={onClose} className='p-2'>
-          <FontAwesomeIcon icon={faXmarkCircle} className='me-2' />
+      <div className="d-flex justify-content-end gap-3">
+        <Button color="gray" onClick={onClose} className="p-2">
+          <FontAwesomeIcon icon={faXmarkCircle} className="me-2" />
           Cancel
         </Button>
-        <Button size='sm' onClick={handleSubmit} className='p-2'>
-          <FontAwesomeIcon icon={faSave} className='me-2' /> Save
+        <Button size="sm" onClick={handleSubmit} className="p-2">
+          <FontAwesomeIcon icon={faSave} className="me-2" /> Save
         </Button>
       </div>
     </Modal>
