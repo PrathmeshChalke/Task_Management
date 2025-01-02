@@ -1,5 +1,5 @@
 import React from "react";
-import { Badge, Button, Select } from "@mantine/core";
+import { Badge, Select } from "@mantine/core";
 
 const TaskList = ({ tasks, onToggleTask, onUpdateStatus }) => {
   return (
