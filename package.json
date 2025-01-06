@@ -18,10 +18,10 @@
     "sweetalert2": "^11.15.3",
     "web-vitals": "^4.2.4"
   },
-  "homepage": "https://PrathmeshChalke.github.io/Task_Management/add-task",
+  "homepage": "https://PrathmeshChalke.github.io/Task_Management",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d dist",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
