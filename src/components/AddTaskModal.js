@@ -1,16 +1,15 @@
-import { faSave } from "@fortawesome/free-solid-svg-icons/faSave";
-import { faXmark } from "@fortawesome/free-solid-svg-icons/faXmark";
-import { faXmarkCircle } from "@fortawesome/free-solid-svg-icons/faXmarkCircle";
+import React, { useState } from "react";
+import { Button, TextInput, Select } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Modal, Button, TextInput, Select } from "@mantine/core";
-import { useState } from "react";
+import { faSave } from "@fortawesome/free-solid-svg-icons/faSave";
+import { faList } from "@fortawesome/free-solid-svg-icons/faList";
 import Swal from "sweetalert2";
 
-const AddTaskModal = ({ isOpen, onClose, onAddTask }) => {
+const AddTaskModal = () => {
+  const navigate = useNavigate();
   const [task, setTask] = useState("");
-
   const [status, setStatus] = useState("");
-
   const [name, setName] = useState("");
 
   const handleSubmit = () => {
@@ -23,12 +22,12 @@ const AddTaskModal = ({ isOpen, onClose, onAddTask }) => {
       return;
     } else if (name.trim() === "") {
       Swal.fire({
-        text: "Please enter Assignee Name.",
+        text: "Please enter a Assignee Name.",
         icon: "warning",
         confirmButtonText: "OK",
       });
       return;
-    } else if (status.trim() === "") {
+    } else if (status === "") {
       Swal.fire({
         text: "Please select a Status.",
         icon: "warning",
@@ -36,92 +35,82 @@ const AddTaskModal = ({ isOpen, onClose, onAddTask }) => {
       });
       return;
     }
-    onAddTask({
+
+    const newTask = {
       id: Date.now(),
       taskName: task,
       status: status,
       name: name,
+    };
+
+    const existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    const updatedTasks = [...existingTasks, newTask];
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+
+    Swal.fire({
+      title: "Success!",
+      text: "Task added successfully",
+      icon: "success",
+      confirmButtonText: "OK",
     });
+
     setTask("");
     setStatus("");
     setName("");
   };
 
   return (
-    <Modal
-      opened={isOpen}
-      onClose={() => null}
-      withCloseButton={false}
-      size="30rem"
-      overlayProps={{
-        backgroundOpacity: 0.55,
-        blur: 3,
-      }}
-      transitionProps={{
-        transition: "fade",
-        duration: 400,
-        timingFunction: "linear",
-      }}
-    >
-      <Modal.Header className="d-flex justify-content-between border-bottom mb-3 py-0">
-        <Modal.Title>
-          <div className="fw-bold fs-4">Add New Task </div>
-        </Modal.Title>
-        <button
-          className="btn"
-          onClick={() => {
-            onClose();
-            setStatus("");
-            setTask("");
-            setName("");
-          }}
+    <div className="card shadow-sm border p-4">
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h4 className="m-0">Add New Task</h4>
+        <Button
+          color="blue"
+          onClick={() => navigate("/Task_Management/task-list")}
+          className="d-flex align-items-center"
         >
-          <FontAwesomeIcon icon={faXmark} size="xl" />
-        </button>
-      </Modal.Header>
-      <Modal.Body className="border-bottom mb-2">
-        <div className="">
-          <TextInput
-            label="Task Name"
-            value={task}
-            onChange={(e) => setTask(e.target.value)}
-            placeholder="Enter task name"
-            className="mb-3"
-            required
-          />
-          <TextInput
-            label="Assignee Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter Assignee name"
-            className="mb-3"
-            required
-          />
-          <Select
-            label="Status"
-            data={[
-              { label: "In Progress", value: "In_Progress" },
-              { label: "Pending", value: "Pending" },
-              { label: "Completed", value: "Completed" },
-            ]}
-            className="mb-3"
-            placeholder="Select..."
-            onChange={(e) => setStatus(e)}
-            value={status}
-            required
-          />
-        </div>
-      </Modal.Body>
-      <div className="d-flex justify-content-end gap-3">
-        <Button color="gray" onClick={onClose} className="p-2">
-          <FontAwesomeIcon icon={faXmarkCircle} className="me-2" />
-          Cancel
-        </Button>
-        <Button size="sm" onClick={handleSubmit} className="p-2">
-          <FontAwesomeIcon icon={faSave} className="me-2" /> Save
+          <FontAwesomeIcon icon={faList} className="me-2" />
+          View Task List
         </Button>
       </div>
-    </Modal>
+
+      <div className="mb-4">
+        <TextInput
+          label="Task Name"
+          value={task}
+          onChange={(e) => setTask(e.target.value)}
+          placeholder="Enter task name"
+          className="mb-3"
+          required
+        />
+        <TextInput
+          label="Assignee Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Enter Assignee name"
+          className="mb-3"
+          required
+        />
+        <Select
+          label="Status"
+          data={[
+            { label: "In Progress", value: "In_Progress" },
+            { label: "Pending", value: "Pending" },
+            { label: "Completed", value: "Completed" },
+          ]}
+          className="mb-3"
+          placeholder="Select..."
+          onChange={(e) => setStatus(e)}
+          value={status}
+          required
+        />
+      </div>
+
+      <div className="d-flex justify-content-end">
+        <Button onClick={handleSubmit} className="px-4">
+          <FontAwesomeIcon icon={faSave} className="me-2" /> Save Task
+        </Button>
+      </div>
+    </div>
   );
 };
 
