@@ -1,7 +1,7 @@
 import React from "react";
 import { MantineProvider } from "@mantine/core";
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
@@ -25,11 +25,6 @@ const App = () => {
 
           <Routes>
             <Route
-              path="/"
-              element={<Navigate to="/Task_Management/add-task" replace />}
-            />
-
-            <Route
               path="/Task_Management"
               element={<Navigate to="/Task_Management/add-task" replace />}
             />
@@ -39,6 +34,7 @@ const App = () => {
             />
             <Route path="/Task_Management/task-list" element={<TaskList />} />
 
+            {/* Catch-all route for any unmatched paths */}
             <Route
               path="*"
               element={<Navigate to="/Task_Management/add-task" replace />}
